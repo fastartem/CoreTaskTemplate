@@ -15,12 +15,45 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
+        Transaction transaction = null;
 
+        try (Session session = Util.HibernateUtil.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+
+            String sql = "CREATE TABLE IF NOT EXISTS user " +
+                    "(id BIGINT UNSIGNED not NULL AUTO_INCREMENT, " +
+                    " name VARCHAR(255), " +
+                    " lastName VARCHAR(255), " +
+                    " age TINYINT, " +
+                    " PRIMARY KEY ( id ))";
+
+            session.createSQLQuery(sql).executeUpdate();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     @Override
     public void dropUsersTable() {
+        Transaction transaction = null;
 
+        try (Session session = Util.HibernateUtil.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+
+            session.createSQLQuery("DROP TABLE user").executeUpdate();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     @Override
@@ -55,6 +88,21 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
+        Transaction transaction = null;
+
+        try (Session session = Util.HibernateUtil.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+
+            session.createQuery("delete from User").executeUpdate();
+
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
 
     }
 }

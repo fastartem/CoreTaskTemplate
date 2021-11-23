@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS users " +
+        String sql = "CREATE TABLE IF NOT EXISTS User " +
                 "(id BIGINT UNSIGNED not NULL AUTO_INCREMENT, " +
                 " name VARCHAR(255), " +
                 " lastName VARCHAR(255), " +
@@ -29,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE IF EXISTS users";
+        String sql = "DROP TABLE IF EXISTS User";
 
         try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
@@ -39,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO users (name, lastName, age) " +
+        String sql = "INSERT INTO User (name, lastName, age) " +
                 "VALUE ('" + name + "','" + lastName + "','" + age + "')";
 
         try (Connection connection = Util.JDBCUtil.getConnection()) {
@@ -51,7 +51,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE from users WHERE id=" + id;
+        String sql = "DELETE from User WHERE id=" + id;
 
         try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
@@ -62,7 +62,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT * from users";
+        String sql = "SELECT * from User";
 
         try (Connection connection = Util.JDBCUtil.getConnection()) {
             ResultSet rs = connection.prepareStatement(sql).executeQuery();
@@ -82,7 +82,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        String sql = "TRUNCATE users";
+        String sql = "TRUNCATE User";
 
         try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();

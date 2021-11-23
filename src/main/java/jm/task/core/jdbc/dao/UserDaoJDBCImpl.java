@@ -21,7 +21,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 " age TINYINT, " +
                 " PRIMARY KEY ( id ))";
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,7 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         String sql = "DROP TABLE IF EXISTS users";
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "INSERT INTO users (name, lastName, age) " +
                 "VALUE ('" + name + "','" + lastName + "','" + age + "')";
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
             System.out.println("User с именем " + name + " добавлен в базу данных");
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) {
         String sql = "DELETE from users WHERE id=" + id;
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> list = new ArrayList<>();
         String sql = "SELECT * from users";
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             ResultSet rs = connection.prepareStatement(sql).executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -84,7 +84,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         String sql = "TRUNCATE users";
 
-        try (Connection connection = Util.getConnection()) {
+        try (Connection connection = Util.JDBCUtil.getConnection()) {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -31,6 +31,7 @@ public class Util {
         }
     }
 
+
     public static class HibernateUtil {
         private static SessionFactory sessionFactory;
 

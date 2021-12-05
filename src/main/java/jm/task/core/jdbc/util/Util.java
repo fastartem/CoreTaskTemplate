@@ -17,6 +17,7 @@ public class Util {
     private final static String URL = "jdbc:mysql://localhost:3306/users_schema";
     private final static String USER = "root";
     private final static String PSW = "11111";
+    private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public static class JDBCUtil {
         private static Connection connection = null;
@@ -33,6 +34,11 @@ public class Util {
 
 
     public static class HibernateUtil {
+        private final static String DIALECT = "org.hibernate.dialect.MySQL8Dialect";
+        private final static String SHOW_SQL = "true";
+        private final static String CONTEXT_CLASS = "thread";
+        private final static String HBM2DDL = "create-drop";
+
         private static SessionFactory sessionFactory;
 
         public static SessionFactory getSessionFactory() {
@@ -41,17 +47,14 @@ public class Util {
                     Configuration configuration = new Configuration();
 
                     Properties settings = new Properties();
-                    settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                    settings.put(Environment.DRIVER, DRIVER);
                     settings.put(Environment.URL, URL);
                     settings.put(Environment.USER, USER);
                     settings.put(Environment.PASS, PSW);
-                    settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-
-                    settings.put(Environment.SHOW_SQL, "true");
-
-                    settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
-                    settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+                    settings.put(Environment.DIALECT, DIALECT);
+                    settings.put(Environment.SHOW_SQL, SHOW_SQL);
+                    settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, CONTEXT_CLASS);
+                    settings.put(Environment.HBM2DDL_AUTO, HBM2DDL);
 
                     configuration.setProperties(settings);
 
